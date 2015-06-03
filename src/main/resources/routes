@@ -1,0 +1,7 @@
+GET /index  com.codemacro.webdemo.test.TestController.index
+GET /404 com.codemacro.webdemo.test.TestController.code404
+GET /obj com.codemacro.webdemo.test.TestController.object
+GET /index.jsp com.codemacro.webdemo.test.TestController.template
+GET /hello com.codemacro.webdemo.test.TestController.hello
+POST /hello com.codemacro.webdemo.test.TestController.sayHello
+
