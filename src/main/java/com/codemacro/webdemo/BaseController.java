@@ -10,10 +10,12 @@ import com.codemacro.webdemo.result.Result;
 public class BaseController {
   private HttpServletRequest request;
   private HttpServletResponse response;
+  private ActionManager actionMgr;
   
-  public void init(HttpServletRequest req, HttpServletResponse resp) {
+  public void init(HttpServletRequest req, HttpServletResponse resp, ActionManager actionMgr) {
     this.request = req;
     this.response = resp;
+    this.actionMgr = actionMgr;
   }
   
   @SuppressWarnings("unchecked")
@@ -39,6 +41,6 @@ public class BaseController {
   }
   
   protected JSPResult jsp(String file) {
-    return new JSPResult(request, response, file);
+    return new JSPResult(request, response, file, actionMgr);
   }
 }

@@ -3,5 +3,6 @@ GET /404 com.codemacro.webdemo.test.TestController.code404
 GET /obj com.codemacro.webdemo.test.TestController.object
 GET /index.jsp com.codemacro.webdemo.test.TestController.template
 GET /hello com.codemacro.webdemo.test.TestController.hello
+GET /route com.codemacro.webdemo.test.TestController.route
 POST /hello com.codemacro.webdemo.test.TestController.sayHello
 

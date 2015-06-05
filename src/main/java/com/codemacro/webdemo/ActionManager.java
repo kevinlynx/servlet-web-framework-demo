@@ -2,7 +2,9 @@ package com.codemacro.webdemo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +74,10 @@ public class ActionManager {
     this.appName = appName;
   }
 
+  public String getAppName() {
+    return appName;
+  }
+
   @SuppressWarnings("unchecked")
   public void registerAction(String clazName, String methodName, String uri, String method) {
     try {
@@ -99,7 +105,7 @@ public class ActionManager {
         return false;
       }
       BaseController ctl = (BaseController) v.clazz.newInstance();
-      ctl.init(req, resp);
+      ctl.init(req, resp, this);
       logger.debug("invoke action {}", uri);
       Result result = (Result) v.method.invoke(ctl, (Object[]) null);
       result.render();
@@ -118,6 +124,17 @@ public class ActionManager {
     ActionKey k = new ActionKey(uri, getMethod(method));
     return actions.get(k);
   }
+  
+  public String getReverseAction(String clazzMethod, Map<String, Object> args) {
+    String argStr = formatQueryParams(args);
+    for (Map.Entry<ActionKey, ActionValue> action : actions.entrySet()) {
+      ActionValue av = action.getValue();
+      if ((av.clazz.getName() + "." + av.method.getName()).equals(clazzMethod)) {
+        return action.getKey().uri + (argStr == "" ? "" : "?" + argStr);
+      }
+    }
+    return "";
+  }
 
   static public HttpMethod getMethod(String m) {
     switch (m) {
@@ -129,6 +146,30 @@ public class ActionManager {
 
   private Class<?> loadClass(String fullName) throws ClassNotFoundException {
     return Class.forName(fullName);
+  }
+
+  private String formatQueryParams(Map<String, Object> args) {
+    if (args == null) {
+      return "";
+    }
+    String s = "";
+    for (Map.Entry<String, Object> entry : args.entrySet()) {
+      String kv = encode(entry.getKey()) + "=" + encode(entry.getValue().toString());
+      if (s == "") {
+        s = kv;
+      } else {
+        s += "&" + kv;
+      }
+    }
+    return s;
+  }
+
+  private String encode(String s) {
+    try {
+      return URLEncoder.encode(s, "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      return "";
+    }
   }
 }
 

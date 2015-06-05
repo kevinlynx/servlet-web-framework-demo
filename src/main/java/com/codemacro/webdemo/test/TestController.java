@@ -43,4 +43,8 @@ public class TestController extends BaseController {
     String name = getQueryString("name");
     return ok(jsp("hello.jsp").put("name", name));
   }
+  
+  public Result route() {
+    return ok(jsp("route.jsp"));
+  }
 }
