@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class JSPResult extends Result {
+  private static final String BASE = "/view/";
   private HttpServletRequest request;
   private String file;
   private Map<String, Object> content;
@@ -17,7 +18,7 @@ public class JSPResult extends Result {
     super(resp, null);
     this.request = req;
     this.content = new TreeMap<String, Object>();
-    this.file = file; 
+    this.file = BASE + file; 
   }
 
   public JSPResult put(String key, Object value) {

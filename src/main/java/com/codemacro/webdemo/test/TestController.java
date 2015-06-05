@@ -27,7 +27,7 @@ public class TestController extends BaseController {
   
   public Result template() {
     String[] langs = new String[] {"c++", "java", "python"};
-    return ok(jsp("/index.jsp")
+    return ok(jsp("index.jsp")
         .put("name", "kevin")
         .put("langs",  langs)
         .put("langList", Arrays.asList(langs))
@@ -36,11 +36,11 @@ public class TestController extends BaseController {
   
   public Result hello() {
     String name = getQueryString("name");
-    return ok(jsp("/hello.jsp").put("name", name));
+    return ok(jsp("hello.jsp").put("name", name));
   }
   
   public Result sayHello() {
     String name = getQueryString("name");
-    return ok(jsp("/hello.jsp").put("name", name));
+    return ok(jsp("hello.jsp").put("name", name));
   }
 }

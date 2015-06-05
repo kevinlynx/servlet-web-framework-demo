@@ -90,13 +90,13 @@ public class ActionManager {
     }
   }
   
-  public void invoke(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  public boolean invoke(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     String uri = req.getRequestURI();
     String method = req.getMethod().toUpperCase();
     try {
       ActionValue v = getAction(uri, method);
       if (v == null) {
-        throw new RuntimeException("not found action: " + uri);
+        return false;
       }
       BaseController ctl = (BaseController) v.clazz.newInstance();
       ctl.init(req, resp);
@@ -111,6 +111,7 @@ public class ActionManager {
       writer.close();
       logger.warn("action exception: {}\n{}", e, actions);
     }
+    return true;
   }
   
   public ActionValue getAction(String uri, String method) {

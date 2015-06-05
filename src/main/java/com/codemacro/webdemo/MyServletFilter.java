@@ -24,8 +24,11 @@ public class MyServletFilter implements Filter {
   }
 
   public void doFilter(ServletRequest req, ServletResponse res,
-      FilterChain arg2) throws IOException, ServletException {
-    app.getActionManager().invoke((HttpServletRequest)req, (HttpServletResponse)res);
+      FilterChain chain) throws IOException, ServletException {
+    boolean ret = app.getActionManager().invoke((HttpServletRequest)req, (HttpServletResponse)res);
+    if (!ret) {
+      chain.doFilter(req, res);
+    }
   }
 
   public void init(FilterConfig conf) throws ServletException {
