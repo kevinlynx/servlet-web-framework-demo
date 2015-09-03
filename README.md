@@ -19,3 +19,9 @@ Compile and package to war:
 Deploy a servlet server (Jetty/Tomcat).
 
 
+## Deploy on Jetty
+
+1. download jetty (v9.2)
+2. put .war to `webapps` path
+3. `java -jar start.jar`
+4. locate: `http://localhost:8080/you-war-file-name`
